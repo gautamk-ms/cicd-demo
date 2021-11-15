@@ -1,9 +1,19 @@
 pipeline{
-    agent any
 
-    tools{
-        maven "3.8.3"
+    // agent any
+
+    // tools{
+    //     maven "3.8.3"
+    // }
+
+    agent {
+        docker {
+            image "maven:3.8.3-openjdk-8"
+            label "docker"
+        }
     }
+
+
 
     stages{
         stage("Build") {
