@@ -1,34 +1,48 @@
 pipeline{
 
-    // agent any
 
-    // tools{
-    //     maven "3.8.3"
-    // }
-
-    environment {
-        //run ==> mkdir -p /temp/maven
-        JAVA_TOOL_OPTIONS = "-Duser.home=/home/jenkins"
-    }
-
-    agent {
-        docker {
-            image "maven:3.8.3-openjdk-8"
-            label "docker"
-            args "-v /tmp/maven:/home/jenkins/.m2 -e MAVEN_CONFIG=/home/jenkins/.m2"
-        }
-    }
-
-
+    agent any
 
     stages{
-        stage("Build") {
-            steps {
-                sh "mvn -version"
-                sh "mvn clean install"
-                sh "mvn clean package"
+
+        stage('Compile & Clean'){
+            steps{
+                sh "mvn clean compile"
             }
         }
+
+        stage('package'){
+            steps{
+                sh "mvn package"
+            }
+        }
+
+        stage('Build Docker image'){
+            steps {
+                sh 'docker build -t  gautamkms/ci_cd_demo:${BUILD_NUMBER} .'
+            }
+        }
+
+        stage('Docker Login'){        
+            steps {
+                withCredentials([string(credentialsId: 'dockerusrnm', variable: 'dockerUID'), string(credentialsId: 'dockerpwd', variable: 'dockerPWD')]) {
+                    sh "docker login -u ${dockerUID} -p ${dockerPWD}"
+                }
+            }                
+        }
+
+        stage('Docker Push'){
+            steps {
+                sh 'docker push gautamkms/ci_cd_demo:${BUILD_NUMBER}'
+            }
+        }
+
+        stage('Docker deploy'){
+            steps {
+                sh 'docker run -itd -p  8085:8085 gautamkms/ci_cd_demo:${BUILD_NUMBER}'
+            }
+        }
+
     }
 
     post {
