@@ -21,12 +21,11 @@ pipeline{
             }
         }
 
-        // stage('package'){
-        //     steps{
-        //         def mvnHome = tool name: 'Maven', type: 'maven'
-        //         sh "${mvnHome}/bin/mvn package"
-        //     }
-        // }
+        stage('package'){
+            steps{
+                sh "mvn package"
+            }
+        }
 
         // stage('Build Docker image'){
         //     steps {
