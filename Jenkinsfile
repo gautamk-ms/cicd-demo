@@ -17,10 +17,7 @@ pipeline{
 
         stage('Compile & Clean'){
             steps{
-                // def mvnHome = tool name: 'Maven', type: 'maven'
-                // sh "${mvnHome}/bin/mvn clean compile"
                 sh "mvn clean compile"
-                echo "Hi .........."
             }
         }
 
