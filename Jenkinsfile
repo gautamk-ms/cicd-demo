@@ -1,19 +1,21 @@
 pipeline{
 
     agent any
-        
-        // docker {image 'maven:3.3.3'}}
-
-    stages{
-
-        // stage ('Initialize') {
-        //     steps {
-        //         sh '''
-        //             echo "PATH = ${PATH}"
-        //             echo "M2_HOME = ${M2_HOME}"
-        //         ''' 
-        //     }
-        // }
+    
+    tools { 
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8' 
+    }
+    
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                ''' 
+            }
+        }
 
         stage('Compile & Clean'){
             steps{
