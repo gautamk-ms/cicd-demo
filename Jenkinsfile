@@ -30,7 +30,7 @@ pipeline{
         stage('Build Docker image'){
             steps {
                 echo "Build number is ${BUILD_NUMBER}"
-                sh 'sudo docker build -f Dockerfile -t gautamkms/ci_cd_demo:${BUILD_NUMBER} .'
+                sh 'docker build -f Dockerfile -t gautamkms/ci_cd_demo:${BUILD_NUMBER} .'
             }
         }
 
