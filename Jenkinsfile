@@ -30,7 +30,7 @@ pipeline{
         stage('Build Docker image'){
             steps {
                 echo "Build number is ${BUILD_NUMBER}"
-                sh 'docker build -t  gautamkms/ci_cd_demo:${BUILD_NUMBER} .'
+                sh 'sudo docker build -t  gautamkms/ci_cd_demo:${BUILD_NUMBER} .'
             }
         }
 
@@ -38,7 +38,7 @@ pipeline{
             steps {
                     withCredentials([string(credentialsId: 'dockerUID', variable: 'id'), string(credentialsId: 'dockerPwd', variable: 'pwd')]) {
                         echo "Id number is >>>>>>>>>>>>>>> ${id}"
-                        sh "docker login -u ${id} -p ${pwd}"
+                        sh "sudo docker login -u ${id} -p ${pwd}"
                 }
             }                
         }
