@@ -27,19 +27,21 @@ pipeline{
             }
         }
 
-        // stage('Build Docker image'){
-        //     steps {
-        //         sh 'docker build -t  gautamkms/ci_cd_demo:${BUILD_NUMBER} .'
-        //     }
-        // }
+        stage('Build Docker image'){
+            steps {
+                echo "Build number is ${BUILD_NUMBER}"
+                sh 'docker build -t  gautamkms/ci_cd_demo:${BUILD_NUMBER} .'
+            }
+        }
 
-        // stage('Docker Login'){        
-        //     steps {
-        //         withCredentials([string(credentialsId: 'dockerUID', variable: 'dockerUID'), string(credentialsId: 'dockerPWD', variable: 'dockerPWD')])  {
-        //             sh "docker login -u ${dockerUID} -p ${dockerPWD}"
-        //         }
-        //     }                
-        // }
+        stage('Docker Login'){        
+            steps {
+                    withCredentials([string(credentialsId: 'dockerUID', variable: 'id'), string(credentialsId: 'dockerPwd', variable: 'pwd')]) {
+                        echo "Id number is >>>>>>>>>>>>>>> ${id}"
+                        sh "docker login -u ${id} -p ${pwd}"
+                }
+            }                
+        }
 
         // stage('Docker Push'){
         //     steps {
