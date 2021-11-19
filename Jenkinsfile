@@ -62,4 +62,17 @@ pipeline{
             cleanWs()
         }
     }
+
+
+
+
+
+// ## To Execute 'sudo' commands run the following commands and add following text in to it
+// sudo su    
+// visudo -f /etc/sudoers
+
+// add add following line at the end.
+
+// jenkins ALL= NOPASSWD: ALL
+
 }
